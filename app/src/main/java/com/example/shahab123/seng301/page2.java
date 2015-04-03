@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -18,6 +19,9 @@ public class page2 extends ActionBarActivity implements View.OnClickListener{
     ImageButton back;
     EditText numTills;
     EditText numPeople;
+    TextView location;
+    TextView people;
+    TextView tills;
     TextView editTextError;
     String choice;
 
@@ -25,12 +29,13 @@ public class page2 extends ActionBarActivity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_page2);
+        //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+       // this.setContentView(R.layout.activity_page2);
         // set up sent parameters
+
         Intent intent = getIntent();
-        choice = intent.getStringExtra("key");
-        if(choice == null || choice.equals("")){    // error in parameters
-            choice = "0";
-        }
+        choice = String.valueOf(data.optionFlag);
+
         page3Intent = new Intent(page2.this, page3.class);  // init the page 3 intent
         page1Intent = new Intent(page2.this, MainActivity.class);
         // init buttons
@@ -42,16 +47,20 @@ public class page2 extends ActionBarActivity implements View.OnClickListener{
         numTills = (EditText) findViewById(R.id.editText2);  // number of tills textbox
         editTextError = (TextView) findViewById(R.id.textView8); // text error message
         numPeople = (EditText) findViewById(R.id.editText);    // number of people textbox
+        location = (TextView) findViewById(R.id.textView4);
+        people = (TextView) findViewById(R.id.textView3);
+        tills = (TextView) findViewById(R.id.textView2);
+        checkLanguage();
     }
 
 
-
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_page2, menu);
         return true;
-    }
+    }*/
 
     public void onClick(View v){
         switch (v.getId()){
@@ -64,6 +73,22 @@ public class page2 extends ActionBarActivity implements View.OnClickListener{
             break;
         }
 
+    }
+    // checks to see if language is french.
+    public void checkLanguage(){
+        if (data.language == 1){ // french
+               translateFrench();
+        }
+    }
+    // translates the current activity to french
+    public void translateFrench(){
+        // reset the buttons to french
+        back.setImageResource(R.drawable.back_french);
+        calculate.setImageResource(R.drawable.calculate_french);
+        // reset the texts to French
+        tills.setText(R.string.numTills_french);
+        people.setText(R.string.numPeople_french);
+        location.setText(R.string.location_french);
     }
 
     @Override
@@ -81,8 +106,6 @@ public class page2 extends ActionBarActivity implements View.OnClickListener{
         return super.onOptionsItemSelected(item);
     }
     public void calculate(){
-
-
         if (choice.equals("0")){    // starBucks
             calculateTime(0);
         }
@@ -108,8 +131,14 @@ public class page2 extends ActionBarActivity implements View.OnClickListener{
         int numPpl = 0;
         int numTls= 0;
         if(numPeople.getText().toString().equals("")||numTills.getText().toString().equals("")){
-            editTextError.setText("Please fill all required fields.");
-            return;
+            if(data.language == 0){
+                editTextError.setText("Please fill all required fields.");
+                return;
+            }else{
+                editTextError.setText("Se il vous plait remplir tous les champs.");
+                return;
+            }
+
         }
         try{
             numTls = Integer.parseInt(numTills.getText().toString());   // gets the number of tills
@@ -117,16 +146,56 @@ public class page2 extends ActionBarActivity implements View.OnClickListener{
         }
         catch(NullPointerException e){
 
-            editTextError.setText("Please fill all required fields.");
-            return;
+            if(data.language == 0){
+                editTextError.setText("Please fill all required fields.");
+                return;
+            }else{
+                editTextError.setText("Se il vous plait remplir tous les champs.");
+                return;
+            }
         }catch(Exception e) {
             System.out.println(e);
         }
         editTextError.setText("");  // reset the error message
+        if (numTls == 0 && numPpl == 0){
+            if(data.language == 0){
+                editTextError.setText("Please enter valid number of tills or people.");
+
+            }else{
+                editTextError.setText("Se il vous plait entrer le numero valide de caisses ou les personnes.");
+
+            }
+        }
+        else if(numTls == 0 && numPpl != 0){ // number of people valid but # tills = 0
+            if(data.language == 0){
+                editTextError.setText("Please enter valid number of tills.");
+
+            }else{
+                editTextError.setText("Se il vous plait entrer le numero valide de tills.");
+
+            }
+        }
+        else if (numTls != 0 && numPpl == 0){
+            data.waitMins = 0;
+            data.waitSeconds = 0;
+
+        }
+        else if (numTls >= 5 || numPpl >= 50){    // unrealistic input
+            if(data.language == 0){
+                editTextError.setText("Please enter valid number of tills or people.");
+
+            }else{
+                editTextError.setText("Se il vous plait entrer le numero valide de caisses ou les personnes.");
+
+            }
+        }
         switch (a){
             case 0:
-                if(numPpl != 0 && numTls != 0){ // no 0 values
-                    time = (numPpl * data.starBucksTime)/(numTls); // calculate total time
+                if(numPpl != 0 && numTls != 0 && (numPpl < 50 && numTls <5)){ // no 0 values
+                    if(numPpl < 10) // none peak time
+                        time = (numPpl * data.starBucksTime)/(numTls); // calculate total time
+                    else
+                        time = (numPpl * data.starBucksTimePeak)/(numTls); // calculate total time
                     if(time >= 1){
                         mins = (int) Math.floor(time);      // derive the mins
                         seconds = (int) ((time-mins)* 60);    // derive the seconds
@@ -139,15 +208,25 @@ public class page2 extends ActionBarActivity implements View.OnClickListener{
                     data.waitSeconds = seconds;
                 }
 
-                break;
-            case 1:
-                time = (numPpl * data.timHortonsTime)/(numTls); // calculate total time
-                mins = (int) Math.floor(time);      // derive the mins
-                seconds = (int) (time-mins)* 60;    // derive the seconds
-                // set the constants
-                data.waitMins = mins;
-                data.waitSeconds = seconds;
 
+                break;
+            case 1: // tim hortons
+                if(numPpl != 0 && numTls != 0 && (numPpl < 50 && numTls <5)){ // no 0 values
+                    if(numPpl < 10)
+                        time = (numPpl * data.timHortonsTime)/(numTls); // calculate total time
+                    else
+                        time = (numPpl * data.timHortonsTimePeak)/(numTls); // calculate total time
+                    if(time >= 1){
+                        mins = (int) Math.floor(time);      // derive the mins
+                        seconds = (int) ((time-mins)* 60);    // derive the seconds
+                    }else{
+                        mins = 0;
+                        seconds = (int) (time*60);
+                    }
+                    // set the constants
+                    data.waitMins = mins;
+                    data.waitSeconds = seconds;
+                }
                 break;
         }
     }

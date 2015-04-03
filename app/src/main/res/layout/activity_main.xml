@@ -14,7 +14,7 @@
         android:id="@+id/imageButton"
         android:src="@drawable/starbucks"
         android:layout_marginTop="33dp"
-        android:layout_below="@+id/radioButton2"
+        android:layout_below="@+id/radioGroup"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -26,27 +26,31 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"/>
-
-    <RadioButton
+    <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="English"
-        android:id="@+id/radioButton"
-        android:layout_below="@+id/textView"
-        android:layout_alignStart="@+id/imageButton"
-        android:layout_alignLeft="@+id/imageButton"
-        android:checked="true" />
+        android:id="@+id/radioGroup"
+        android:layout_below="@+id/textView">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="English"
+            android:id="@+id/radioButton"
 
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="French"
-        android:id="@+id/radioButton2"
-        android:layout_below="@+id/radioButton"
-        android:layout_alignStart="@+id/radioButton"
-        android:layout_alignLeft="@+id/radioButton"
-        android:checked="false" />
+            android:layout_alignStart="@+id/imageButton"
+            android:layout_alignLeft="@+id/imageButton"
+            android:checked="true" />
 
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Francais"
+            android:id="@+id/radioButton2"
+            android:layout_below="@+id/radioButton"
+            android:layout_alignStart="@+id/radioButton"
+            android:layout_alignLeft="@+id/radioButton"
+            android:checked="false" />
+    </RadioGroup>
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

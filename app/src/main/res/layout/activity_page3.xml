@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Estimated Time:"
+            android:text="@string/waitTime"
             android:textSize="30dp"
             android:layout_marginLeft="65dp"
             android:layout_marginTop="30dp"
@@ -44,11 +44,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:layout_marginLeft="15dp"
             android:textColor="#0b0b0b"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="          Help us improve your experience\n   by submitting your wait time in lin to us!\n     Just click Done Payment when done\n                              paying!"
+            android:text="@string/message"
             android:id="@+id/textView7" />
 
         <ImageButton
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:background="#c7c7c7"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="60dp"
             android:id="@+id/imageButton5"
             android:src="@drawable/done_payment" />
 

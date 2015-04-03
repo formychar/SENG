@@ -27,7 +27,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="#c7c7c7"
-            android:layout_gravity="center_vertical">
+            android:layout_gravity="center_vertical"
+            >
 
             <LinearLayout
                 android:orientation="vertical"
@@ -45,7 +46,7 @@
                 android:textColor="#0b0b0b"
 
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="  Number of\n  Open Tills"
+                android:text="@string/numTills"
                 android:id="@+id/textView2" />
 
             <TextView
@@ -55,7 +56,7 @@
                 android:textColor="#0b0b0b"
                 android:layout_marginLeft="120dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="   Number of \nPeople in Line"
+                android:text="@string/numPeople"
                 android:id="@+id/textView3" />
         </LinearLayout>
 
@@ -106,7 +107,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginLeft="10dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Location:"
+                android:text="@string/location"
                 android:textColor="#0b0b0b"
                 android:id="@+id/textView4" />
 
