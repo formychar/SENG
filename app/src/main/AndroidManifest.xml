@@ -9,7 +9,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label=""
+            android:label="Wait Time Calculator"
             android:screenOrientation="portrait"
             >
             <intent-filter>
@@ -27,14 +27,6 @@
             android:name=".page3"
             android:label=""
             android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".page2French"
-            android:label="@string/title_activity_page2_french" >
-        </activity>
-        <activity
-            android:name=".page3French"
-            android:label="@string/title_activity_page3_french" >
         </activity>
     </application>
 

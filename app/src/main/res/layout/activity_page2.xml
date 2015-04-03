@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:textColor="#0b0b0b"
-                android:layout_marginLeft="120dp"
+                android:layout_marginLeft="80dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/numPeople"
                 android:id="@+id/textView3" />
@@ -114,7 +114,8 @@
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                android:prompt="@string/spinner"
+                android:entries="@array/locationEntries"
                 android:id="@+id/spinner"
                 android:spinnerMode="dropdown" />
 
@@ -125,7 +126,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/imageButton4"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="5dp"
             android:background="#c7c7c7"
             android:src="@drawable/calculate" />
 

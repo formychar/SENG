@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 
@@ -25,32 +26,17 @@ public class page2 extends ActionBarActivity implements View.OnClickListener{
     TextView editTextError;
     String choice;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_page2);
-        //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-       // this.setContentView(R.layout.activity_page2);
-        // set up sent parameters
-
-        Intent intent = getIntent();
-        choice = String.valueOf(data.optionFlag);
-
-        page3Intent = new Intent(page2.this, page3.class);  // init the page 3 intent
-        page1Intent = new Intent(page2.this, MainActivity.class);
-        // init buttons
-        calculate = (ImageButton) findViewById(R.id.imageButton4);  // init the calculate button
-        calculate.setOnClickListener(this);
-        back = (ImageButton) findViewById(R.id.imageButton3);  // init the calculate button
-        back.setOnClickListener(this);
-        // init text box
-        numTills = (EditText) findViewById(R.id.editText2);  // number of tills textbox
-        editTextError = (TextView) findViewById(R.id.textView8); // text error message
-        numPeople = (EditText) findViewById(R.id.editText);    // number of people textbox
-        location = (TextView) findViewById(R.id.textView4);
-        people = (TextView) findViewById(R.id.textView3);
-        tills = (TextView) findViewById(R.id.textView2);
-        checkLanguage();
+        choice = String.valueOf(data.optionFlag); // load previous choice made by user
+        initIntent();   // init transition intents
+        initButtons();  // init buttons
+        initEditText(); // init edit texts
+        initTextView(); // init textview
+        checkLanguage();    // check to see which language is set
     }
 
 
@@ -61,7 +47,33 @@ public class page2 extends ActionBarActivity implements View.OnClickListener{
         getMenuInflater().inflate(R.menu.menu_page2, menu);
         return true;
     }*/
+    // inits the text views
 
+    public void initIntent(){
+        page3Intent = new Intent(page2.this, page3.class);  // init the page 3 intent
+        page1Intent = new Intent(page2.this, MainActivity.class);
+    }
+    // inits the buttons
+    public void initButtons(){
+        calculate = (ImageButton) findViewById(R.id.imageButton4);  // init the calculate button
+        calculate.setOnClickListener(this);
+        back = (ImageButton) findViewById(R.id.imageButton3);  // init the calculate button
+        back.setOnClickListener(this);
+
+    }
+    // init text views
+    public void initTextView(){
+        editTextError = (TextView) findViewById(R.id.textView8); // text error message
+        location = (TextView) findViewById(R.id.textView4);
+        people = (TextView) findViewById(R.id.textView3);
+        tills = (TextView) findViewById(R.id.textView2);
+    }
+    // inits the edit text fields
+    public void initEditText(){
+        numTills = (EditText) findViewById(R.id.editText2);  // number of tills textbox
+        numPeople = (EditText) findViewById(R.id.editText);    // number of people textbox
+    }
+    // on click listener for the UI widgets
     public void onClick(View v){
         switch (v.getId()){
             case R.id.imageButton4: // case for calculate button
@@ -105,6 +117,7 @@ public class page2 extends ActionBarActivity implements View.OnClickListener{
 
         return super.onOptionsItemSelected(item);
     }
+    // controller for the calculations
     public void calculate(){
         if (choice.equals("0")){    // starBucks
             calculateTime(0);
@@ -123,18 +136,19 @@ public class page2 extends ActionBarActivity implements View.OnClickListener{
         this.finish();
 
     }
-
+    // this method will calculate the wait time based on the number of people in line and number of open tills
+    // Does bound checking on all the parameters, and also can distinguish between peak and none peak data
     public void calculateTime(int a){
-        int mins;
-        int seconds;
-        double time;
-        int numPpl = 0;
-        int numTls= 0;
-        if(numPeople.getText().toString().equals("")||numTills.getText().toString().equals("")){
+        int mins;   // used in calculations
+        int seconds;    // used in calculations
+        double time;    // used in calculations
+        int numPpl = 0; // used to recieve values from edit text fields
+        int numTls= 0;  // used to recieve values of edit text fields
+        if(numPeople.getText().toString().equals("")||numTills.getText().toString().equals("")){ // check to see if fields are empty
             if(data.language == 0){
                 editTextError.setText("Please fill all required fields.");
                 return;
-            }else{
+            }else{  // french
                 editTextError.setText("Se il vous plait remplir tous les champs.");
                 return;
             }
@@ -144,12 +158,12 @@ public class page2 extends ActionBarActivity implements View.OnClickListener{
             numTls = Integer.parseInt(numTills.getText().toString());   // gets the number of tills
             numPpl = Integer.parseInt(numPeople.getText().toString()); // gets number of people
         }
-        catch(NullPointerException e){
+        catch(NullPointerException e){ // in case of null pointer exception from the objects
 
             if(data.language == 0){
                 editTextError.setText("Please fill all required fields.");
                 return;
-            }else{
+            }else{ // french
                 editTextError.setText("Se il vous plait remplir tous les champs.");
                 return;
             }
@@ -157,11 +171,11 @@ public class page2 extends ActionBarActivity implements View.OnClickListener{
             System.out.println(e);
         }
         editTextError.setText("");  // reset the error message
-        if (numTls == 0 && numPpl == 0){
+        if (numTls == 0 && numPpl == 0){ // invalid number of people and tills
             if(data.language == 0){
-                editTextError.setText("Please enter valid number of tills or people.");
+                editTextError.setText("Please enter valid number of tills and people.");
 
-            }else{
+            }else{  // french
                 editTextError.setText("Se il vous plait entrer le numero valide de caisses ou les personnes.");
 
             }
@@ -182,15 +196,16 @@ public class page2 extends ActionBarActivity implements View.OnClickListener{
         }
         else if (numTls >= 5 || numPpl >= 50){    // unrealistic input
             if(data.language == 0){
-                editTextError.setText("Please enter valid number of tills or people.");
+                editTextError.setText("Please enter valid number of tills and people.");
 
             }else{
                 editTextError.setText("Se il vous plait entrer le numero valide de caisses ou les personnes.");
 
             }
         }
+        // this switch does the calculations for which ever selected establishment
         switch (a){
-            case 0:
+            case 0: // starbucks
                 if(numPpl != 0 && numTls != 0 && (numPpl < 50 && numTls <5)){ // no 0 values
                     if(numPpl < 10) // none peak time
                         time = (numPpl * data.starBucksTime)/(numTls); // calculate total time
@@ -199,7 +214,7 @@ public class page2 extends ActionBarActivity implements View.OnClickListener{
                     if(time >= 1){
                         mins = (int) Math.floor(time);      // derive the mins
                         seconds = (int) ((time-mins)* 60);    // derive the seconds
-                    }else{
+                    }else{  // time less than 1
                         mins = 0;
                         seconds = (int) (time*60);
                     }

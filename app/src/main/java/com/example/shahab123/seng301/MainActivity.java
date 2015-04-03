@@ -16,8 +16,9 @@ import android.widget.RadioGroup;
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
     ImageButton starbucks;
     ImageButton tim_hortons;
+    ImageButton exit;
     Intent page2Intent;
-    Intent page2IntentFrench;
+
     RadioButton english;
     RadioButton french;
     RadioGroup radioGroup;
@@ -25,45 +26,44 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //this.setContentView(R.layout.activity_main);
 
-        page2Intent = new Intent(MainActivity.this, page2.class); // set up the intent for page 2
-        page2IntentFrench = new Intent (MainActivity.this, page2French.class); //  set up intent for page 2 french
-
-        starbucks = (ImageButton) findViewById(R.id.imageButton);   // init the starbucks button from XML
-        tim_hortons = (ImageButton) findViewById(R.id.imageButton2);    // init the tim hortons button from XML
-
-        english = (RadioButton) findViewById(R.id.radioButton);
-        french = (RadioButton) findViewById(R.id.radioButton2);
-        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
-
-
-        starbucks.setOnClickListener(this);
-        tim_hortons.setOnClickListener(this);
+        initIntent();   // init Intents
+        initButtons();  // init Buttons
+        initRadioButtons(); // init radio buttons
     }
-
-    /*
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }*/
-
-    @Override
+    // Listener for all the UI interactions
     public void onClick(View v){
-        radioGroup();
         languageSelect();
         switch (v.getId()){
-
             case R.id.imageButton:  // Starbucks is pressed
                 starbucks();
                 break;
             case R.id.imageButton2: // tim hortons is pressed
                 timHortons();
                 break;
+            case R.id.imageButton7:  // exit is pressed
+                System.exit(1);
         }
+    }
+    // inits the radio buttons used for language
+    public void initRadioButtons(){
+        english = (RadioButton) findViewById(R.id.radioButton);
+        french = (RadioButton) findViewById(R.id.radioButton2);
+        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+    }
+    // inits the Intents used for page transitions
+    public void initIntent(){
+        page2Intent = new Intent(MainActivity.this, page2.class); // set up the intent for page 2
+    }
+    // inits all the Image Buttons used in the first activity
+    public void initButtons(){
+        starbucks = (ImageButton) findViewById(R.id.imageButton);   // init the starbucks button from XML
+        tim_hortons = (ImageButton) findViewById(R.id.imageButton2);    // init the tim hortons button from XML
+        exit = (ImageButton) findViewById(R.id.imageButton7);
+        starbucks.setOnClickListener(this);
+        tim_hortons.setOnClickListener(this);
+        exit.setOnClickListener(this);
     }
     // selects the language based on the radio button input
     public void languageSelect(){
@@ -73,24 +73,16 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             data.language = 1;
         }
     }
-    // toggles the radio buttons if pressed
-    public void radioGroup(){
 
-    }
+    // opens page for Starbucks
     public void starbucks(){ // open the second activity
-
             data.optionFlag = 0;    // 0 for Starbucks
             MainActivity.this.startActivity(page2Intent);
-
-
     }
-
+    // opens page for tim hortons
     public void timHortons(){
-
             data.optionFlag = 1;         // 1 for tim Hortons
             MainActivity.this.startActivity(page2Intent);
-
-
     }
 
     @Override
