@@ -16,7 +16,7 @@ import android.widget.RadioGroup;
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
     ImageButton starbucks;
     ImageButton tim_hortons;
-    ImageButton exit;
+
     Intent page2Intent;
 
     RadioButton english;
@@ -42,8 +42,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             case R.id.imageButton2: // tim hortons is pressed
                 timHortons();
                 break;
-            case R.id.imageButton7:  // exit is pressed
-                System.exit(1);
+
         }
     }
     // inits the radio buttons used for language
@@ -60,10 +59,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     public void initButtons(){
         starbucks = (ImageButton) findViewById(R.id.imageButton);   // init the starbucks button from XML
         tim_hortons = (ImageButton) findViewById(R.id.imageButton2);    // init the tim hortons button from XML
-        exit = (ImageButton) findViewById(R.id.imageButton7);
+
         starbucks.setOnClickListener(this);
         tim_hortons.setOnClickListener(this);
-        exit.setOnClickListener(this);
+
     }
     // selects the language based on the radio button input
     public void languageSelect(){
@@ -77,11 +76,13 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     // opens page for Starbucks
     public void starbucks(){ // open the second activity
             data.optionFlag = 0;    // 0 for Starbucks
+
             MainActivity.this.startActivity(page2Intent);
     }
     // opens page for tim hortons
     public void timHortons(){
             data.optionFlag = 1;         // 1 for tim Hortons
+
             MainActivity.this.startActivity(page2Intent);
     }
 

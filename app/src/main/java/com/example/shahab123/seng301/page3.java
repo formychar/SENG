@@ -26,6 +26,7 @@ public class page3 extends ActionBarActivity implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_page3);
+
         initButtons();
         initIntent();
         initTextView();

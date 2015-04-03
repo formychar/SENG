@@ -61,15 +61,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageButton7"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/exit"
-        android:background="#c7c7c7"
-        android:layout_marginBottom="53dp" />
+
 
 
 </RelativeLayout>

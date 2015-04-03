@@ -31,6 +31,7 @@ public class page2 extends ActionBarActivity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_page2);
+
         choice = String.valueOf(data.optionFlag); // load previous choice made by user
         initIntent();   // init transition intents
         initButtons();  // init buttons
@@ -126,7 +127,9 @@ public class page2 extends ActionBarActivity implements View.OnClickListener{
             calculateTime(1);
         }
         if(editTextError.getText().toString().equals("")){
+
             page2.this.startActivity(page3Intent);
+
         }
 
     }

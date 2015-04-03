@@ -12,5 +12,6 @@ public class  data {
         static int language = 0;    // 0 = english, 1 = french                     1 = Tim Hortons
         static int waitMins = 0;   // mins for counter
         static int waitSeconds = 0;    // seconds for counter
+
     }
 
